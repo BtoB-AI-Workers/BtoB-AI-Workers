@@ -1,0 +1,32 @@
+# 応答可能範囲（Layer3）
+# 「答えてよい質問」と「答えてはいけない質問」を明示
+
+candidate_reply:
+  allowed_topics:
+    - 案件条件の確認（時給・稼働時間・スキル要件・リモート可否）
+    - 応募方法の案内
+    - 面談日程の候補提示（最大3枠まで）
+    - 稼働開始時期の一般的な説明
+    - よくある質問（FAQから参照）
+
+  forbidden_topics:
+    - 金額交渉・条件変更の確定
+    - 契約書・NDA文面の回答
+    - 他案件への推薦
+    - クライアント名の開示
+    - 給与以外の個人金銭（ボーナス・経費精算）
+    - 法律・税務の判断
+    - 同業他社の情報
+
+  fallback_behavior:
+    forbidden_detected: "escalate_to_operator"
+    unclear: "escalate_to_operator"
+    out_of_scope: "respond_with_escalation_notice"  # 「担当者が折り返します」のみ送信
+
+job_posting:
+  allowed_output:
+    - job_posting_schema.yamlに準拠した案件情報のみ
+  forbidden_output:
+    - 起票原文そのまま（加工必須）
+    - クライアント名・社名
+    - 内部判断・コメント

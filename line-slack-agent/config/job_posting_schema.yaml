@@ -1,0 +1,34 @@
+# 案件投稿スキーマ（Phase 1 L3）
+# src/guardrails/l3_scope.py が job_classifier の missing_fields とこのスキーマを突き合わせる
+
+required_fields:
+  - title            # 案件タイトル
+  - work_type        # SES / 架電 / 事務 / その他
+  - hourly_rate      # 時給レンジ
+  - monthly_hours    # 月稼働時間
+  - remote_policy    # フルリモート / 一部出社 / フル出社
+  - must_skills      # 必須スキル
+  - start_date       # 稼働開始時期
+  - application_cta  # 応募方法（定型文）
+
+optional_fields:
+  - welcome_skills
+  - industry
+  - notes
+
+forbidden_content_patterns:
+  # 正規表現（Pythonre互換）
+  - pattern: "(?i)社内URL"
+    reason: "社内リンクの外部流出防止"
+  - pattern: "\\d{3,4}-\\d{4}"
+    reason: "電話番号が生で混入するのを防止（LINEに出す連絡先は応募CTA定型のみ）"
+  - pattern: "@[a-zA-Z0-9._-]+\\.[a-zA-Z]{2,}"
+    reason: "メールアドレス生値の漏洩防止（会社ドメインは case_by_case で審査）"
+
+formatting_rules:
+  max_length: 1000
+  min_length: 100
+  required_sections:
+    - "時給"
+    - "稼働時間"
+    - "必須"

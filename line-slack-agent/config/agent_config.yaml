@@ -1,0 +1,47 @@
+# エージェント全体設定
+
+killswitch:
+  reaction_emoji: "octagonal_sign"
+  granularities:
+    - global
+    - channel
+    - job
+    - candidate
+    - thread
+  check_points:
+    - worker_start
+    - after_claude
+    - before_send
+  audit_channel: "audit_channel"
+
+ack:
+  target_p95_ms: 1000
+  target_p99_ms: 2500
+  sqlite_busy_timeout_ms: 5000
+  transaction_internal_io_forbidden: true
+  alert_500_rate_threshold: 0.05
+
+claude_headless:
+  cwd_sandbox: "sandbox"
+  max_turns: 10
+  output_format: "stream-json"
+  allowed_tools:
+    - "mcp__gdrive__search"
+    - "mcp__gdrive__read_document"
+    - "Read"
+    - "Grep"
+  disallowed_tools:
+    - "Write"
+    - "Edit"
+    - "mcp__slack__*"
+    - "Bash"
+
+knowledge_cache:
+  strategy: "mtime_hash"
+  github_poll_interval_sec: 300
+  reload_command: "/reload-knowledge"
+
+queue:
+  lease_duration_sec: 180
+  max_attempts: 3
+  retry_backoff_sec: [30, 120, 600]

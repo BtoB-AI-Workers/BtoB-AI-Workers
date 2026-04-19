@@ -1,0 +1,32 @@
+# allowlist.yaml
+# Phase 0で各IDを確定させる。プレースホルダのままPhase 1に入ってはいけない。
+
+main_channel:
+  id: "C0AGBUCCG8N"
+  name: "0997_line_friends"
+  purpose: "案件起票・案件共有・候補者対応"
+
+audit_channel:
+  id: "REPLACE_WITH_AUDIT_CHANNEL_ID"
+  name: "agent-audit"
+  purpose: "監査ログ・killswitch・エスカレーション"
+
+bots:
+  zapier_webhook_user_id: "REPLACE_WITH_ZAPIER_BOT_USER_ID"
+  claude_bot_user_id: "REPLACE_WITH_CLAUDE_BOT_USER_ID"
+
+allowed_event_sources:
+  - channel: main_channel
+    allowed_user_ids:
+      - "REPLACE_WITH_ZAPIER_BOT_USER_ID"
+    allowed_human_user_ids:
+      - "REPLACE_WITH_OPERATOR_SLACK_USER_ID"
+
+allowed_send_targets:
+  - channel: main_channel
+    note: "Zapier経由でLINEに自動配信されるため慎重に"
+  - channel: audit_channel
+    note: "LINE非連動、監査・通知のみ"
+
+team_id_allowlist:
+  - "REPLACE_WITH_TEAM_ID"

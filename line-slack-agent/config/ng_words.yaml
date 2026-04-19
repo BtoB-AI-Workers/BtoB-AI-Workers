@@ -1,0 +1,31 @@
+# NGワード定義（Layer1）
+# 部分一致（substring）で検出。全角/半角は src/guardrails/l1_ngword.py 側で正規化。
+
+categories:
+  confidential:
+    description: "社内機密・未公開情報の漏洩防止"
+    words:
+      - "社内限定"
+      - "部外秘"
+      - "confidential"
+      - "NDA"
+
+  personal_info:
+    description: "候補者・クライアントの個人情報誤送信防止"
+    words:
+      - "マイナンバー"
+      - "クレジットカード"
+      - "パスワード"
+      - "口座番号"
+
+  risky_promises:
+    description: "誇大な約束・不確実な金額保証"
+    words:
+      - "確実に稼げる"
+      - "絶対に"
+      - "必ず契約"
+
+  offensive:
+    description: "攻撃的・不適切表現"
+    words: []
+    # 具体リストはPhase 1運用中に蓄積

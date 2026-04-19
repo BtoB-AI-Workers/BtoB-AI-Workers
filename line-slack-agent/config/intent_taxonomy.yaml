@@ -1,0 +1,36 @@
+# 意図分類カテゴリとしきい値（Layer2）
+# Phase 1: job_posting セクションのみ稼働
+# Phase 2: candidate_reply セクションを本稼働
+
+job_posting:
+  description: "案件起票メンション入力を二値判定"
+  classifier: "src/intent/job_classifier.py"
+  model: "claude-haiku-4-5-20251001"
+  labels:
+    - is_job     # 案件情報として処理可能
+    - not_job    # 起票対象外（雑談・メモ・別用途）
+  thresholds:
+    min_confidence: 0.85    # これ未満は送信停止
+    # precision=1.0ゲート合格後に Phase 1 本番送信解放
+
+candidate_reply:
+  description: "候補者からのLINE返信を多クラス分類（Phase 2）"
+  classifier: "src/intent/classifier.py"
+  model: "claude-haiku-4-5-20251001"
+  labels:
+    - interest_confirmation   # 興味あり/応募します
+    - condition_question      # 条件・詳細確認
+    - schedule_coordination   # 日程調整
+    - decline                 # 辞退
+    - negotiation             # 条件交渉
+    - off_topic               # 雑談・範囲外
+    - other                   # 分類不能
+  thresholds:
+    min_confidence: 0.6     # 暫定（Phase 2評価で更新）
+    high_confidence: 0.85   # 暫定（Phase 2評価で更新）
+  evaluation:
+    fixture_dir: "tests/fixtures/intent_eval/"
+    min_samples: 50
+    target_precision_per_label: 0.9
+    target_recall_per_label: 0.85
+    false_positive_tolerance_on_negatives: 0

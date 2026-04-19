@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenv
+.venv/
+venv/
+env/
+ENV/
+
+# Secrets
+.env
+.env.local
+*.env
+!.env.example
+service_account.json
+*credentials*.json
+*-keyfile.json
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code sandbox runtime
+line-slack-agent/sandbox/**
+!line-slack-agent/sandbox/.gitkeep
+
+# Knowledge sync (Drive is source of truth; the mirror is tracked but
+# not direct-edits by humans; keep synced content committed by the sync bot)
+# (knowledge/ itself IS tracked — only local stale copies are excluded)
+
+# Local scratch
+tmp/
+scratch/
